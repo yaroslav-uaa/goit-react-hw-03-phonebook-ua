@@ -18,7 +18,6 @@ export class Form extends Component {
   
   handleNameChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value });
-    this.props.getName(this.state.name);
   }
 
 
@@ -56,7 +55,6 @@ export class Form extends Component {
 
 Form.propTypes = {
   getContact: PropTypes.func,
-  getName: PropTypes.func,
 };
 
 export default Form;

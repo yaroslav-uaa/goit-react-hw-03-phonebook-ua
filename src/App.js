@@ -16,21 +16,14 @@ export class App extends Component {
     filter: '',
   };
 
-  getName = data => {
-    this.setState({ name: data });
-  };
-
-  getContact = contact => {
-    let mark = true;
-    this.state.contacts.map(el =>
-      el.name === contact.name ? (mark = false) : '',
+  getContact = firstContact => {
+    const { contacts } = this.state;
+    const originalContact = contacts.find(
+      contact => contact.name === firstContact.name,
     );
-
-    mark
-      ? this.setState(prev => {
-          return { ...prev, contacts: [...prev.contacts, contact] };
-        })
-      : alert(`${contact.name} is already in contacts`);
+    originalContact ? 
+      alert(`${originalContact.name} is already in contacts.`)
+ : this.setState({ contacts: [firstContact, ...contacts] });
   };
 
   getFilterContact = e => {
@@ -56,11 +49,14 @@ export class App extends Component {
     return (
       <>
         <Section title="Phonebook">
-          <Form getContact={this.getContact} getName={this.getName} />
+          <Form getContact={this.getContact} />
         </Section>
         <Section title="Contacts">
           <Filter filter={filter} getFilterContact={this.getFilterContact} />
-          <Contacts contactList={this.filteredContact()} deleteContact={this.deleteContact} />
+          <Contacts
+            contactList={this.filteredContact()}
+            deleteContact={this.deleteContact}
+          />
         </Section>
       </>
     );
